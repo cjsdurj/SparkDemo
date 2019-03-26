@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package view;
 
@@ -15,10 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
-/**
- *
- * @author Administrator
- */
+
 public class Textdialog extends JDialog implements   KeyListener,MouseListener{
 
     JLabel jlabel;

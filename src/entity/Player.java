@@ -11,14 +11,18 @@ public class Player extends Character {
 	private int cur_xp;
 	private int money;
 	
+	private static Player instance = new Player("渣渣辉");
+	
 	private Equipment[]   equipmentOnUse = new Equipment[5];
 	private Skill[]  skills =new Skill[10];
 	private Item[]  items  =new Item[20];
 	private Equipment[] equipmentOnBag = new Equipment[10];
+	
 	// 人物坐标
-	int x = 5, y = 5;
+	private int x = 5;
+	private int	y = 5;
 
-	public Player(String name) {
+	private Player(String name) {
 		image = (new ImageIcon("./util/主角头像.png")).getImage();
 		this.name = name;
 		level = 1;
@@ -39,6 +43,10 @@ public class Player extends Character {
 		for(int i=0;i<20;i++) {
 			items[i] = new NullItem();
 		}
+	}
+	
+	public static Player getInstance() {
+		return instance;
 	}
 	
 	public boolean can_levelup() {

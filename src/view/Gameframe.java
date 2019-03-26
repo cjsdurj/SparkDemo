@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package view;
 
@@ -13,19 +9,16 @@ import javax.swing.JFrame;
 import demo.Music;
 import entity.Player;
 
-/**
- *
- * @author Administrator
- */
+
 
 //游戏主面板类
 
 public class Gameframe extends JFrame implements ActionListener {
     
-    public Player player = new Player("渣渣辉");
+    public Player player = Player.getInstance();
     
     Mappanel mappanel; 
-    Statepanel statepanel = new Statepanel(player);
+    Statepanel statepanel = new Statepanel();
     JButton close = new JButton("离开游戏");
     
     Music music;
@@ -33,7 +26,7 @@ public class Gameframe extends JFrame implements ActionListener {
     public Gameframe(){
         music = new Music("./util/游戏配乐.au");
      
-        mappanel = new Mappanel(statepanel,player);
+        mappanel = new Mappanel(statepanel);
                 
         this.setLayout(null);
         this.setBounds(300, 100, 605+200, 635);

@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package view;
 
 import java.awt.GridLayout;
@@ -19,10 +14,6 @@ import entity.Player;
 import entity.monster.Monster;
 import entity.skill.Skill;
 
-/**
- *
- * @author Administrator
- */
 public class Choosedialog extends JDialog implements ActionListener{
     
     private JButton[] button = new JButton[30];

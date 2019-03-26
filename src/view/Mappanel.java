@@ -44,8 +44,8 @@ public class Mappanel extends JPanel implements KeyListener {
 	Statepanel statepanel;
 	Player player;
 
-	public Mappanel(Statepanel statepanel, Player player) {
-		this.player = player;
+	public Mappanel(Statepanel statepanel) {
+		this.player = Player.getInstance();
 		x = player.getX();
 		y = player.getY();
 
@@ -99,7 +99,7 @@ public class Mappanel extends JPanel implements KeyListener {
 					int rand = (int)(Math.random()*8);
 					if (rand<2) {
 						this.repaint();
-						Fightdialog fight =  new Fightdialog(player);
+						Fightdialog fight =  new Fightdialog();
 						statepanel.repaint(); break;
 					}
 				}
@@ -118,7 +118,7 @@ public class Mappanel extends JPanel implements KeyListener {
 					int rand = (int)(Math.random()*8);
 					if (rand<2) {
 						this.repaint();
-						Fightdialog fight =  new Fightdialog(player);
+						Fightdialog fight =  new Fightdialog();
 						statepanel.repaint(); break;
 					}
 				}
@@ -137,7 +137,7 @@ public class Mappanel extends JPanel implements KeyListener {
 					int rand = (int)(Math.random()*8);
 					if (rand<2) {
 						this.repaint();
-						Fightdialog fight =  new Fightdialog(player);
+						Fightdialog fight =  new Fightdialog();
 						statepanel.repaint(); break;
 					}
 				}
@@ -156,7 +156,7 @@ public class Mappanel extends JPanel implements KeyListener {
 					int rand = (int)(Math.random()*100);
 					if (rand<15) {
 						this.repaint();
-						Fightdialog fight =  new Fightdialog(player);
+						Fightdialog fight =  new Fightdialog();
 						statepanel.repaint(); break;
 					}
 				}

@@ -3,10 +3,6 @@ package demo;
 
 import view.Gameframe;
 
-/**
- * @author Dell
- *
- */
 
 public class test {
 

@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package view;
 
@@ -25,10 +22,7 @@ import entity.monster.MonsterFactory;
 
 import entity.monster.SimpleMonsterFactory;
 
-/**
- *
- * @author Administrator
- */
+
 class Fightdialog extends JDialog implements ActionListener {
 
 	private Player player;
@@ -45,10 +39,10 @@ class Fightdialog extends JDialog implements ActionListener {
 	
 
 	// 地图随机遇怪的构造方法
-	Fightdialog(Player player) {
+	Fightdialog() {
 		int size = (int) (Math.random() * 10 + 4) / 4;
         
-		this.player = player;
+		this.player = Player.getInstance();
 		//怪物工厂
 		MonsterFactory simpleFactory = new SimpleMonsterFactory();
 		MonsterFactory middleFactory = new MiddleMonsterFactory();
@@ -70,7 +64,7 @@ class Fightdialog extends JDialog implements ActionListener {
 			monsters.add(monster);
 		}
 
-		PlayerPanel = new JPanel_player(player);// 主角面板
+		PlayerPanel = new JPanel_player();// 主角面板
 		PlayerPanel.setBounds(0, 0, 300, 400);
 
 		MonsterPanel = new JPanel_monsters(monsters);// 怪物面板,把PLAYER改掉
@@ -103,12 +97,12 @@ class Fightdialog extends JDialog implements ActionListener {
 	}
 
 	// 指定战斗的对象的构造方法
-	Fightdialog(Player player, ArrayList<Monster> monsters) {
-		this.player = player;
+	Fightdialog( ArrayList<Monster> monsters) {
+		this.player = Player.getInstance();
 		this.monsters = monsters;
 		
 
-		PlayerPanel = new JPanel_player(player);// 主角面板
+		PlayerPanel = new JPanel_player();// 主角面板
 		PlayerPanel.setBounds(0, 0, 300, 400);
 
 		MonsterPanel = new JPanel_monsters(monsters);// 怪物面板
@@ -143,10 +137,10 @@ class Fightdialog extends JDialog implements ActionListener {
 	// 内部类
 	// 主角面板
 	public class JPanel_player extends JPanel {
-		Player player;
+		private Player player;
 
-		public JPanel_player(Player player) {
-			this.player = player;
+		public JPanel_player() {
+			this.player = Player.getInstance();
 		}
 
 		protected void paintComponent(Graphics g) {

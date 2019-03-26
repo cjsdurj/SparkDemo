@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package demo;
 
@@ -12,10 +8,6 @@ import java.net.MalformedURLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Administrator
- */
 public class Music {
 boolean looping = false;
     File file1 = new File("12.au"); 

@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package view;
 
 import java.awt.Color;
@@ -14,10 +9,6 @@ import javax.swing.JPanel;
 import entity.Equipment;
 import entity.Player;
 
-/**
- *
- * @author Administrator
- */
 
 //状态类
 
@@ -26,8 +17,8 @@ public class Statepanel extends JPanel{
     public Player player;  
     Image image = (new ImageIcon("./util/主角头像.png")).getImage();//人物头像图标
     
-    public Statepanel(Player player){
-        this.player = player;
+    public Statepanel(){
+        this.player = Player.getInstance();
         this.setSize(200, 600);
     }
     
