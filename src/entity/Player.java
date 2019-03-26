@@ -2,6 +2,7 @@ package entity;
 
 import javax.swing.ImageIcon;
 
+import entity.skill.JumpKick;
 import entity.skill.NullSkill;
 import entity.skill.Skill;
 import view.Textdialog;
@@ -14,9 +15,9 @@ public class Player extends Character {
 	private static Player instance = new Player("渣渣辉");
 	
 	private Equipment[]   equipmentOnUse = new Equipment[5];
-	private Skill[]  skills =new Skill[10];
+	private Skill[]  skills =new Skill[4];
 	private Item[]  items  =new Item[20];
-	private Equipment[] equipmentOnBag = new Equipment[10];
+	private Equipment[] equipmentOnBag = new Equipment[4];
 	
 	// 人物坐标
 	private int x = 5;
@@ -36,13 +37,14 @@ public class Player extends Character {
 		for (int i = 0;i<5;i++) {
 			equipmentOnUse[i] = new NullEquipment();
 		}		
-		for(int i =0;i<10;i++) {
+		for(int i =0;i<4;i++) {
 			equipmentOnBag[i] = new NullEquipment();
 			skills[i] = new NullSkill();
 		}		
 		for(int i=0;i<20;i++) {
 			items[i] = new NullItem();
 		}
+		skills[0] = new JumpKick();
 	}
 	
 	public static Player getInstance() {

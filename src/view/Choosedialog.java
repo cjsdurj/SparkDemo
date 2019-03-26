@@ -41,7 +41,23 @@ public class Choosedialog extends JDialog implements ActionListener{
           
       }
       
-      public Choosedialog(Skill[] skill ,int i){
+      public Choosedialog(Skill[] skills){
+    	  this.total =skills.length;
+          panel.setLayout(new GridLayout(2, 4));
+          for(int j = 0 ; j < skills.length ; j++){
+              button[j] = new JButton(skills[j].getName()+"(PP:"+skills[j].getCur_pp()+"/"+skills[j].getMax_pp()+")");
+              panel.add(button[j]);
+              button[j].addActionListener(this);
+          }
+          
+          panel.setBounds(0, 0, 300, 100);
+          this.add(panel);
+          this.setLocation(300, 500);
+          this.setSize(600,250);
+          this.setTitle("选择技能");
+          this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+          this.setModal(true);
+          this.setVisible(true);
           
       }
       

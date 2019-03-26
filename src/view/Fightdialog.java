@@ -1,5 +1,4 @@
 
-
 package view;
 
 import java.awt.Graphics;
@@ -21,7 +20,8 @@ import entity.monster.Monster;
 import entity.monster.MonsterFactory;
 
 import entity.monster.SimpleMonsterFactory;
-
+import entity.skill.Skill;
+import entity.skill.Type;
 
 class Fightdialog extends JDialog implements ActionListener {
 
@@ -36,29 +36,27 @@ class Fightdialog extends JDialog implements ActionListener {
 	private JButton prop = new JButton("道具");
 	private JButton leave = new JButton("逃跑");
 	private JButton skill = new JButton("技能");
-	
 
 	// 地图随机遇怪的构造方法
 	Fightdialog() {
 		int size = (int) (Math.random() * 10 + 4) / 4;
-        
+
 		this.player = Player.getInstance();
-		//怪物工厂
+		// 怪物工厂
 		MonsterFactory simpleFactory = new SimpleMonsterFactory();
 		MonsterFactory middleFactory = new MiddleMonsterFactory();
 		MonsterFactory hardFactory = new HardMonsterFactory();
-		
 
 		monsters = new ArrayList<Monster>();
-        //10%概率产生简单怪物，40%概率产生中等难度怪物，50%概率产生困难难度怪物
+		// 10%概率产生简单怪物，40%概率产生中等难度怪物，50%概率产生困难难度怪物
 		for (int j = 0; j < size; j++) {
 			double x = Math.random();
-			Monster monster =null;
-			if(x<0.1) {
-			   monster = hardFactory.getRandom();
-			}else if(x>=0.1&&x<0.5) {
+			Monster monster = null;
+			if (x < 0.1) {
+				monster = hardFactory.getRandom();
+			} else if (x >= 0.1 && x < 0.5) {
 				monster = middleFactory.getRandom();
-			}else {
+			} else {
 				monster = simpleFactory.getRandom();
 			}
 			monsters.add(monster);
@@ -97,10 +95,9 @@ class Fightdialog extends JDialog implements ActionListener {
 	}
 
 	// 指定战斗的对象的构造方法
-	Fightdialog( ArrayList<Monster> monsters) {
+	Fightdialog(ArrayList<Monster> monsters) {
 		this.player = Player.getInstance();
 		this.monsters = monsters;
-		
 
 		PlayerPanel = new JPanel_player();// 主角面板
 		PlayerPanel.setBounds(0, 0, 300, 400);
@@ -182,8 +179,40 @@ class Fightdialog extends JDialog implements ActionListener {
 
 		}
 	}
+    public void checkgame() {
+    	boolean lose = false;
 
-	public void actionPerformed(ActionEvent e) {
+		if (!player.is_alive()) {
+			lose = true;
+		}
+
+		for (Monster monster : monsters) {
+			if (!monster.is_alive()) {
+				new Textdialog(monster.getName() + "已经死亡");
+				monster.award(player);
+				if (player.can_levelup()) {
+					player.levelup();
+				}
+
+			}
+		}
+
+		monsters.removeIf(monster -> !monster.is_alive());
+		this.repaint();
+
+		if (monsters.size() == 0) {
+			new Textdialog("战斗结束");
+			this.dispose();
+		}
+
+		if (lose) {
+			new Textdialog("战斗结束");
+			this.dispose();
+		}
+    	
+    }
+
+    public void actionPerformed(ActionEvent e) {
 
 		if (e.getActionCommand().equals("攻击")) {
 
@@ -197,46 +226,30 @@ class Fightdialog extends JDialog implements ActionListener {
 				monster.attack_someone(player);
 			}
 			this.repaint();
-
-			boolean lose = false;
-
-			if (!player.is_alive()) {
-				lose = true;
-			}
-
-			for (Monster monster : monsters) {
-				if (!monster.is_alive()) {
-					new Textdialog(monster.getName() + "已经死亡");
-					monster.award(player);
-					if (player.can_levelup()) {
-						player.levelup();
-						}
-			
-					
-				}
-			}
-			
-			monsters.removeIf( monster-> !monster.is_alive());
-			this.repaint();
-			
-			if (monsters.size() == 0) {
-				new Textdialog("战斗结束");
-				this.dispose();
-			}
-
-			
-			if (lose) {
-				new Textdialog("战斗结束");
-				this.dispose();
-			}
+            
+			this.checkgame();
 
 		}
 
 		if (e.getActionCommand().equals("道具")) {
 
 		}
-		if (e.getActionCommand().equals("技能")) {
 
+		if (e.getActionCommand().equals("技能")) {
+			int skill_choice = new Choosedialog(player.getSkills()).getChoice();
+			   if(skill_choice ==-1) return;
+			Skill skill = player.getSkills()[skill_choice];
+			boolean success =true;
+			if(skill.getType()==entity.skill.Type.single) {
+			int monster_choice = new Choosedialog(monsters).getChoice();
+			if (monster_choice ==-1) return;
+			 success = skill.useSkill(player, monsters, monster_choice);}
+			
+			if(success) {
+			for (Monster monster : monsters) {
+				monster.attack_someone(player);}}
+			this.repaint();
+			this.checkgame();			
 		}
 		if (e.getActionCommand().equals("逃跑")) {
 			new Textdialog("逃跑成功");

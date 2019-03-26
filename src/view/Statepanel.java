@@ -45,7 +45,7 @@ public class Statepanel extends JPanel{
         g.drawString("鞋子: "+equipmentOnUse[2].getName(), 10, 425);
         g.drawString("装饰品(左): "+equipmentOnUse[3].getName(), 10, 450);
         g.drawString("装饰品(右): "+equipmentOnUse[4].getName(), 10, 475);
-        g.drawString("金子："+player.getMoney(), 10, 500);
+        g.drawString("金币："+player.getMoney(), 10, 500);
         g.drawString("经验："+player.getCur_xp()+"/"+player.getXp(), 10, 525);
         
         
