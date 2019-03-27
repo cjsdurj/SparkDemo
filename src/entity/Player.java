@@ -5,6 +5,10 @@ import javax.swing.ImageIcon;
 import entity.skill.JumpKick;
 import entity.skill.NullSkill;
 import entity.skill.Skill;
+import entity.weapon.Bloodthirster;
+import entity.weapon.InfinityEdge;
+import entity.weapon.Knife;
+import entity.weapon.Weapon;
 import view.Textdialog;
 
 public class Player extends Character {
@@ -14,10 +18,10 @@ public class Player extends Character {
 	
 	private static Player instance = new Player("渣渣辉");
 	
-	private Equipment[]   equipmentOnUse = new Equipment[5];
+	private Weapon weapon;
 	private Skill[]  skills =new Skill[4];
 	private Item[]  items  =new Item[20];
-	private Equipment[] equipmentOnBag = new Equipment[4];
+	private Weapon[] equipmentOnBag = new Weapon[4];
 	
 	// 人物坐标
 	private int x = 5;
@@ -34,13 +38,13 @@ public class Player extends Character {
 		cur_xp = 0;
 		money = 100;		
 		update_attributes();
-		for (int i = 0;i<5;i++) {
-			equipmentOnUse[i] = new NullEquipment();
-		}		
+		
+		weapon =new InfinityEdge();
+		
 		for(int i =0;i<4;i++) {
-			equipmentOnBag[i] = new NullEquipment();
 			skills[i] = new NullSkill();
 		}		
+		
 		for(int i=0;i<20;i++) {
 			items[i] = new NullItem();
 		}
@@ -62,49 +66,23 @@ public class Player extends Character {
 				
 				xp = xp * 5 / 3;
 				new Textdialog( "恭喜升级了,你现在的等级为:" + level);
-				
-				double temp = Math.random();
-				if (temp < 0.1)
-					strength += 2;
-				if (temp >= 0.1 && temp < 0.5)
-					strength += 3;
-				if (temp >= 0.5 && temp <= 0.8)
 					strength += 4;
-				if (temp > 0.8)
-					strength += 5;
-
-				temp = Math.random();
-				if (temp < 0.1)
-					intelligence += 1;
-				if (temp >= 0.1 && temp < 0.5)
-					intelligence += 2;
-				if (temp >= 0.5 && temp <= 0.8)
-					intelligence += 3;
-				if (temp > 0.8)
 					intelligence += 4;
-
-				temp = Math.random();
-				if (temp < 0.1)
-					agility += 1;
-				if (temp >= 0.1 && temp < 0.5)
-					agility += 2;
-				if (temp >= 0.5 && temp <= 0.8)
-					agility += 3;
-				if (temp > 0.8)
 					agility += 4;
 				update_attributes();		
 			}
 		}
 	
 		
-    	
+
 	@Override
-	public void attack_someone(Character c) {
-		// TODO Auto-generated method stub
+		public void attack_someone(Character c) {
 		if(this.is_alive()) {
-		super.attack_someone(c);}
-		
-	}
+			weapon.attack_someone(c);}
+			else {
+			 new Textdialog(this.getName()+"已经死亡，不能发起进攻");
+			}
+		}
 
 	public Skill[] getSkills() {
 		return skills;
@@ -122,21 +100,15 @@ public class Player extends Character {
 		this.items = items;
 	}
 
-	public Equipment[] getEquipmentOnBag() {
+	public Weapon[] getEquipmentOnBag() {
 		return equipmentOnBag;
 	}
 
-	public void setEquipmentOnBag(Equipment[] equipmentOnBag) {
+	public void setEquipmentOnBag(Weapon[] equipmentOnBag) {
 		this.equipmentOnBag = equipmentOnBag;
 	}
 
-	public Equipment[] getEquipmentOnUse() {
-		return equipmentOnUse;
-	}
-
-	public void setEquipmentOnUse(Equipment[] equipmentOnUse) {
-		this.equipmentOnUse = equipmentOnUse;
-	}
+	
 	
 
 	public void gain_xp(int x) {
@@ -186,5 +158,27 @@ public class Player extends Character {
 	public void setMoney(int money) {
 		this.money = money;
 	}
+
+	public Weapon getWeapon() {
+		return weapon;
+	}
+
+	public void setWeapon(Weapon weapon) {
+		this.cur_attack -= this.weapon.getStrength();
+		this.weapon = weapon;
+		this.cur_attack += this.weapon.getStrength();
+		this.update_attributes();
+	}
+	
+	
+	public void add_hp(int x) {
+		if((this.cur_hp+x)>this.hp) {
+			this.cur_hp =this.hp;
+		}else {
+			this.cur_hp += x;
+		}
+		
+	};
+	
     
 }
