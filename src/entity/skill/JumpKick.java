@@ -11,6 +11,7 @@ public class JumpKick extends Skill {
 	
 	public JumpKick() {
 		this.name = "飞踢";
+		
 		this.description ="跳至高空，给敌人致命一击。对单个目标造成100+自己攻击力*1的伤害";
 		this.type = Type.single;
 		this.max_pp =5;

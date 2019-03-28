@@ -4,11 +4,12 @@ package entity;
 import view.Textdialog;
 
 
-public class Item {
+public class Potion {
 	
 	protected String name;
+	protected String description;
 	
-	public Item() {
+	public Potion() {
 	}
 
 	public String getName() {
@@ -18,9 +19,17 @@ public class Item {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	
+    
 }
 
         

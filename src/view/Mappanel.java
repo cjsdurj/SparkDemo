@@ -173,7 +173,7 @@ public class Mappanel extends JPanel implements KeyListener {
 	}
 
 	public void setEnter() {
-	
+	     new MenuDialog();
 	}
 
 	public void keyTyped(KeyEvent e) {

@@ -28,7 +28,7 @@ public class Statepanel extends JPanel{
         g.setColor(Color.BLACK);
         g.drawImage(image, 45, 0, this);
         
-        Weapon weapon = player.getWeapon();
+        Weapon weapon = player.getWeapon_onUse();
         
         g.drawString("名字： "+player.getName(), 10, 150);//名字
         g.drawString("等级："+player.getLevel(), 10, 175);
