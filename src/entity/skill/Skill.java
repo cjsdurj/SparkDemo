@@ -77,6 +77,10 @@ public abstract class Skill {
 	public int getCur_pp() {
 		return cur_pp;
 	}
+
+	public void setCur_pp(int cur_pp) {
+		this.cur_pp = cur_pp;
+	}
 	
 	
 }

@@ -14,6 +14,8 @@ public class StrengthenedState extends State {
 		super();
 		// TODO Auto-generated constructor stub
 		this.name ="正统美猴王";
+		player.setCur_attack(2*player.getAttack());
+		
 	}
     
 	@Override
@@ -26,6 +28,7 @@ public class StrengthenedState extends State {
 	@Override
 	public void checkstate() {
          if(round ==0) {
+        	 player.setCur_attack(player.getAttack());
         	 player.setState(new NormalState());
          }
 	}

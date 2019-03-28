@@ -21,6 +21,7 @@ import entity.monster.Monster;
 import entity.monster.MonsterFactory;
 
 import entity.monster.SimpleMonsterFactory;
+import entity.potion.Potion;
 import entity.skill.Skill;
 import entity.state.NormalState;
 
@@ -254,7 +255,25 @@ class Fightdialog extends JDialog implements ActionListener {
 		}
 
 		if (e.getActionCommand().equals("道具")) {
-
+			int choice = new Choosedialog(player).getChoice();
+			   if(choice ==-1) return;
+			Potion potion = player.getPotions()[choice];
+			
+			ArrayList<Character> order = new ArrayList<Character>();
+			order.add(player);
+			order.addAll(monsters);
+			order.sort(null);
+			
+			for(Character c:order) {
+				if(c instanceof Player) {
+					if(player.is_alive())potion.Use();
+				}else if(c instanceof Monster) {
+					c.attack_someone(player);
+				}
+			}
+			
+			this.repaint();
+			this.checkgame();
 		}
 
 		if (e.getActionCommand().equals("技能")) {

@@ -151,6 +151,10 @@ public abstract class Character implements Comparable {
 	public void setCur_hp(int cur_hp) {
 		this.cur_hp = cur_hp;
 	}
+
+	public void setCur_attack(int cur_attack) {
+		this.cur_attack = cur_attack;
+	}
 	
 	
 }

@@ -10,7 +10,7 @@ import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import entity.Player;
-import entity.Potion;
+import entity.potion.Potion;
 import entity.skill.Skill;
 import entity.weapon.Weapon;
 
@@ -235,6 +235,7 @@ public class MenuDialog extends javax.swing.JDialog {
 		// 状态面板重画
 		if (jList1.getSelectedIndex() == -1)
 			return;
+		player.getPotions()[jList1.getSelectedIndex()].Use();
 		statepanel.repaint();
 		// 道具面板重画
 		jList1.setModel(new ListModel("药水"));

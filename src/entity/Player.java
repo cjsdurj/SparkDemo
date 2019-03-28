@@ -8,6 +8,8 @@ import entity.state.*;
 import entity.weapon.*;
 import view.Textdialog;
 import entity.monster.*;
+import entity.potion.*;
+
 
 public class Player extends Character {
 	private int xp;
@@ -16,7 +18,7 @@ public class Player extends Character {
 	private static Player instance = new Player("六学大师");
 	private Weapon weapon_onUse;
 	private Skill[] skills = new Skill[4];
-	private Potion[] potions = new Potion[20];
+	private Potion[] potions = new Potion[2];
 	private Weapon[] weapons = new Weapon[4];
 	
 	
@@ -44,9 +46,10 @@ public class Player extends Character {
 			weapons[i] = new NullWeapon();
 		}
 
-		for (int i = 0; i < 20; i++) {
-			potions[i] = new NullPotion();
-		}
+		
+		potions[0] =new HealthPotion();
+		potions[1] = new ManaPotion();
+		
 		skills[0] = new Zkjl();
 		skills[1] = new Wtlkh();
 		skills[2] =new Stlb();

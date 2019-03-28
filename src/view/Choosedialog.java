@@ -12,6 +12,7 @@ import javax.swing.WindowConstants;
 
 import entity.Player;
 import entity.monster.Monster;
+import entity.potion.*;
 import entity.skill.Skill;
 
 public class Choosedialog extends JDialog implements ActionListener{
@@ -62,6 +63,23 @@ public class Choosedialog extends JDialog implements ActionListener{
       }
       
       public  Choosedialog(Player player){
+    	  Potion[] potions = player.getPotions();
+    	  this.total = potions.length;
+          panel.setLayout(new GridLayout(2 , 3));
+          for(int j = 0 ; j < total ; j++){
+              button[j] = new JButton(potions[j].getName() );
+              panel.add(button[j]);
+              button[j].addActionListener(this);
+          }
+          
+          panel.setBounds(0, 0, 300, 100);
+          this.add(panel);
+          this.setLocation(300, 500);
+          this.setSize(600,250);
+          this.setTitle("选择使用的物品");
+          this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+          this.setModal(true);
+          this.setVisible(true);
          
       }
 
