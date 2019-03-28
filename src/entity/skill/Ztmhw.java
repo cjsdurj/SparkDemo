@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import entity.Player;
 import entity.monster.Monster;
+import entity.state.StrengthenedState;
+import view.Textdialog;
 
 public class Ztmhw extends Skill {
     
@@ -20,8 +22,8 @@ public class Ztmhw extends Skill {
 
 	@Override
 	public void skillFunction(Player self, ArrayList<Monster> monsters) {
-		// TODO Auto-generated method stub
-
+		    new Textdialog(self.getName()+"使用正统美猴王，进入霸者状态");
+            self.setState(new StrengthenedState());
 	}
 
 }

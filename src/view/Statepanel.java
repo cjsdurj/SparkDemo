@@ -41,7 +41,6 @@ public class Statepanel extends JPanel{
         g.drawString("防守力: "+player.getDefence(), 10, 325);
         g.drawString("速度 : "+player.getSpeed(), 10, 350);
         g.drawString("武器: "+weapon.getName(), 10, 375);
-        
         g.drawString("金币："+player.getMoney(), 10, 500);
         g.drawString("经验："+player.getCur_xp()+"/"+player.getXp(), 10, 525);
         

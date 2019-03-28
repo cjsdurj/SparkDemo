@@ -28,9 +28,6 @@ public abstract class Character implements Comparable {
 	protected int cur_defence;
 	protected int cur_speed;
 
-	// 人物状态 0表示正常 1表示中毒 2表示麻痹 3表示
-	protected int state;
-
 	public Character() {
 
 	}
@@ -146,15 +143,14 @@ public abstract class Character implements Comparable {
 		return cur_defence;
 	}
 
-	public int getState() {
-		return state;
-	}
 
 	public int getAgility() {
 		return agility;
 	}
-	
-	
-	
 
+	public void setCur_hp(int cur_hp) {
+		this.cur_hp = cur_hp;
+	}
+	
+	
 }

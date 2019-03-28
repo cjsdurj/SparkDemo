@@ -22,6 +22,7 @@ import entity.monster.MonsterFactory;
 
 import entity.monster.SimpleMonsterFactory;
 import entity.skill.Skill;
+import entity.state.NormalState;
 
 class Fightdialog extends JDialog implements ActionListener {
 
@@ -148,6 +149,7 @@ class Fightdialog extends JDialog implements ActionListener {
 			g.drawString("攻击力： " + player.getCur_attack(), 50, 180);
 			g.drawString("防御力： " + player.getCur_defence(), 50, 200);
 			g.drawString("速度： " + player.getCur_speed(), 50, 220);
+			g.drawString("状态： " + player.getState().getName(), 50, 240);
 		}
 	}
 
@@ -213,8 +215,18 @@ class Fightdialog extends JDialog implements ActionListener {
 		}
     	
     }
+    
+    
+    
+    
+    @Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+    	player.setState(new NormalState());
+		super.dispose();
+	}
 
-    public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) {
 
 		if (e.getActionCommand().equals("攻击")) {
 
@@ -249,7 +261,7 @@ class Fightdialog extends JDialog implements ActionListener {
 			int skill_choice = new Choosedialog(player.getSkills()).getChoice();
 			   if(skill_choice ==-1) return;
 			Skill skill = player.getSkills()[skill_choice];
-			skill.useSkill(player, monsters);
+			player.UseSkill(skill, monsters);
 			this.repaint();
 			this.checkgame();			
 		}

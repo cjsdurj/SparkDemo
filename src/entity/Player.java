@@ -1,13 +1,13 @@
 package entity;
 
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 import entity.skill.*;
-
-import entity.weapon.Bloodthirster;
-import entity.weapon.InfinityEdge;
-import entity.weapon.NullWeapon;
-import entity.weapon.Weapon;
+import entity.state.*;
+import entity.weapon.*;
 import view.Textdialog;
+import entity.monster.*;
 
 public class Player extends Character {
 	private int xp;
@@ -18,6 +18,9 @@ public class Player extends Character {
 	private Skill[] skills = new Skill[4];
 	private Potion[] potions = new Potion[20];
 	private Weapon[] weapons = new Weapon[4];
+	
+	
+	private State state;
 	// 人物坐标
 	private int x = 5;
 	private int y = 5;
@@ -34,6 +37,7 @@ public class Player extends Character {
 		money = 100;
 		update_attributes();
 		weapon_onUse = new InfinityEdge();
+		state = new NormalState();
 
 		for (int i = 0; i < 4; i++) {
 			skills[i] = new NullSkill();
@@ -73,11 +77,17 @@ public class Player extends Character {
 
 	@Override
 	public void attack_someone(Character c) {
-		if (this.is_alive()) {
-			weapon_onUse.attack_someone(c);
-		} else {
-			new Textdialog(this.getName() + "已经死亡，不能发起进攻");
-		}
+		this.state.attack_someone(c);
+	}
+    
+	@Override
+	public void suffer_damage(int i, String s) {
+		// TODO Auto-generated method stub
+		this.state.suffer_damage(i, s);
+	}
+	
+	public  void UseSkill(Skill skill,ArrayList<Monster> monsters) {
+		state.UseSkill(skill, monsters);
 	}
 
 	public Skill[] getSkills() {
@@ -169,5 +179,15 @@ public class Player extends Character {
 		} else {
 			this.cur_hp += x;
 		}
+	}
+
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
 	};
+	
+	
 }
