@@ -1,9 +1,8 @@
 package entity;
 
 import javax.swing.ImageIcon;
-import entity.skill.JumpKick;
-import entity.skill.NullSkill;
-import entity.skill.Skill;
+import entity.skill.*;
+
 import entity.weapon.Bloodthirster;
 import entity.weapon.InfinityEdge;
 import entity.weapon.NullWeapon;
@@ -14,7 +13,7 @@ public class Player extends Character {
 	private int xp;
 	private int cur_xp;
 	private int money;
-	private static Player instance = new Player("渣渣辉");
+	private static Player instance = new Player("六学大师");
 	private Weapon weapon_onUse;
 	private Skill[] skills = new Skill[4];
 	private Potion[] potions = new Potion[20];
@@ -22,14 +21,14 @@ public class Player extends Character {
 	// 人物坐标
 	private int x = 5;
 	private int y = 5;
-
+	
 	private Player(String name) {
 		image = (new ImageIcon("./util/主角头像.png")).getImage();
 		this.name = name;
 		level = 1;
-		strength = 250;
-		intelligence = 250;
-		this.agility = 250;
+		strength = 30;
+		intelligence = 30;
+		this.agility = 30;
 		xp = 90;
 		cur_xp = 0;
 		money = 100;
@@ -44,7 +43,10 @@ public class Player extends Character {
 		for (int i = 0; i < 20; i++) {
 			potions[i] = new NullPotion();
 		}
-		skills[0] = new JumpKick();
+		skills[0] = new Zkjl();
+		skills[1] = new Wtlkh();
+		skills[2] =new Stlb();
+		skills[3] =new Ztmhw();
 	}
 
 	public static Player getInstance() {

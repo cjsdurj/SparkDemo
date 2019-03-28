@@ -125,7 +125,7 @@ public class MenuDialog extends javax.swing.JDialog {
 			}
 		});
 
-		jButton3.setText("使用武功");
+		jButton3.setText("使用技能");
 		jButton3.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jButton3ActionPerformed(evt);

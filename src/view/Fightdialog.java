@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import entity.Player;
+import entity.Character;
 import entity.monster.HardMonsterFactory;
 import entity.monster.MiddleMonsterFactory;
 import entity.monster.Monster;
@@ -21,7 +22,6 @@ import entity.monster.MonsterFactory;
 
 import entity.monster.SimpleMonsterFactory;
 import entity.skill.Skill;
-import entity.skill.Type;
 
 class Fightdialog extends JDialog implements ActionListener {
 
@@ -100,10 +100,10 @@ class Fightdialog extends JDialog implements ActionListener {
 		this.monsters = monsters;
 
 		PlayerPanel = new JPanel_player();// 主角面板
-		PlayerPanel.setBounds(0, 0, 300, 400);
+		PlayerPanel.setBounds(0, 0, 300, 440);
 
 		MonsterPanel = new JPanel_monsters(monsters);// 怪物面板
-		MonsterPanel.setBounds(300, 0, 300, 400);
+		MonsterPanel.setBounds(300, 0, 300, 440);
 
 		panel3 = new JPanel();// 按钮面板
 		panel3.setBounds(0, 400, 600, 200);
@@ -114,7 +114,7 @@ class Fightdialog extends JDialog implements ActionListener {
 		panel3.add(skill);
 		panel3.add(leave);
 
-		this.setBounds(300, 100, 605, 635);
+		this.setBounds(300, 100, 605, 675);
 		this.setLayout(null);
 		this.add(PlayerPanel);
 		this.add(MonsterPanel);
@@ -147,6 +147,7 @@ class Fightdialog extends JDialog implements ActionListener {
 			g.drawString("生命： " + player.getCur_hp() + "/" + player.getHp(), 50, 160);
 			g.drawString("攻击力： " + player.getCur_attack(), 50, 180);
 			g.drawString("防御力： " + player.getCur_defence(), 50, 200);
+			g.drawString("速度： " + player.getCur_speed(), 50, 220);
 		}
 	}
 
@@ -167,12 +168,13 @@ class Fightdialog extends JDialog implements ActionListener {
 				while (monster_iter.hasNext()) {
 					Monster monster = monster_iter.next();
 					g.drawImage(monster.getImage(), 30 + (i % 2 * 150), 10 + (i / 2) * 200, this);
-					g.drawString("名字： " + monster.getName(), 30 + (i % 2 * 150), 110 + (i / 2) * 200);// 名字
-					g.drawString("等级： " + monster.getLevel(), 30 + (i % 2 * 150), 130 + (i / 2) * 200);
+					g.drawString("名字： " + monster.getName(), 30 + (i % 2 * 150), 100 + (i / 2) * 200);// 名字
+					g.drawString("等级： " + monster.getLevel(), 30 + (i % 2 * 150), 120 + (i / 2) * 200);
 					g.drawString("生命： " + monster.getCur_hp() + "/" + monster.getHp(), 30 + (i % 2 * 150),
-							150 + (i / 2) * 200);
-					g.drawString("攻击力： " + monster.getCur_attack(), 30 + (i % 2 * 150), 170 + (i / 2) * 200);
-					g.drawString("防御力： " + monster.getCur_defence(), 30 + (i % 2 * 150), 190 + (i / 2) * 200);
+							140 + (i / 2) * 200);
+					g.drawString("攻击力： " + monster.getCur_attack(), 30 + (i % 2 * 150), 160 + (i / 2) * 200);
+					g.drawString("防御力： " + monster.getCur_defence(), 30 + (i % 2 * 150), 180 + (i / 2) * 200);
+					g.drawString("速度： " + monster.getCur_speed(), 30 + (i % 2 * 150), 200 + (i / 2) * 200);
 					i++;
 				}
 			}
@@ -219,14 +221,22 @@ class Fightdialog extends JDialog implements ActionListener {
 			int choice = new Choosedialog(monsters).getChoice();
 			if (choice == -1)
 				return;
-
-			player.attack_someone(monsters.get(choice));
-
-			for (Monster monster : monsters) {
-				monster.attack_someone(player);
+			
+			//将人物按速度排序，决定攻击顺序
+			ArrayList<Character> order = new ArrayList<Character>();
+			order.add(player);
+			order.addAll(monsters);
+			order.sort(null);
+			
+			for(Character c:order) {
+				if(c instanceof Player) {
+					c.attack_someone(monsters.get(choice));
+				}else if(c instanceof Monster) {
+					c.attack_someone(player);
+				}
 			}
-			this.repaint();
             
+			this.repaint();
 			this.checkgame();
 
 		}
@@ -239,15 +249,7 @@ class Fightdialog extends JDialog implements ActionListener {
 			int skill_choice = new Choosedialog(player.getSkills()).getChoice();
 			   if(skill_choice ==-1) return;
 			Skill skill = player.getSkills()[skill_choice];
-			boolean success =true;
-			if(skill.getType()==entity.skill.Type.single) {
-			int monster_choice = new Choosedialog(monsters).getChoice();
-			if (monster_choice ==-1) return;
-			 success = skill.useSkill(player, monsters, monster_choice);}
-			
-			if(success) {
-			for (Monster monster : monsters) {
-				monster.attack_someone(player);}}
+			skill.useSkill(player, monsters);
 			this.repaint();
 			this.checkgame();			
 		}

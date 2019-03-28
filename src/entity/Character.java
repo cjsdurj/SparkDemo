@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
   
 import view.Textdialog;
 
-public abstract class Character {
+public abstract class Character implements Comparable {
 
 	protected Image image;
 	protected String name;
@@ -70,7 +70,7 @@ public abstract class Character {
 	
 	
 	public  void  update_attributes() {
-		speed = 10+(int)0.5*(intelligence+agility);
+		speed = 10+(int)(intelligence*0.5+agility*0.5);
 		hp = 30 + strength * 6;
 		attack = (int) (strength * 1.5+agility*0.5);
 		defence = (int) (strength * 0.5+intelligence*0.5+agility*0.5);
@@ -85,8 +85,15 @@ public abstract class Character {
 	public boolean is_alive() {
 		return this.cur_hp > 0;
 	}
-
+    
 	
+	
+	@Override
+	public int compareTo(Object o) {
+		Character c =(Character)o;
+		return   c.cur_speed - this.cur_speed ;
+	}
+
 	public Image getImage() {
 		return image;
 	}

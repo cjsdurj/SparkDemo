@@ -3,6 +3,7 @@ package entity.skill;
 
 import java.util.ArrayList;
 
+import entity.Character;
 import entity.Player;
 import entity.monster.Monster;
 import view.Textdialog;
@@ -12,31 +13,46 @@ public abstract class Skill {
 	protected String description ="";
 	protected int max_pp;
 	protected int cur_pp;
-	protected Type type;
+	protected boolean on_the_offensive;
 	
-	public boolean useSkill(Player self,ArrayList<Monster> monsters,int i) {
-		if(cur_pp>0) {
-			if(this.type ==Type.single) {
-			skillFunction(self, monsters, i);}
-			else if(this.type ==Type.all) {
-				skillFunction(self, monsters);	
-			}else {
-				skillFunction(self);
-			}
-			this.cur_pp --;
-			return true;
+	public void useSkill(Player self,ArrayList<Monster> monsters) {
+		if(canUseSkill()) {
 			
-		}else {
+			ArrayList<Character> order = new ArrayList<Character>();
+			
+			if(this.is_OnTheOffensive()) {
+			skillFunction(self, monsters);
+			order.addAll(monsters);
+			order.sort(null);
+			}else {
+				order.add(self);
+				order.addAll(monsters);
+				order.sort(null);	
+			}
+			
+			for(Character c:order) {
+				if(c instanceof Player) {
+					skillFunction(self, monsters);
+				}else if(c instanceof Monster) {
+					c.attack_someone(self);
+				}
+			}
+			
+			this.cur_pp --;	
+		}
+	}
+	
+	public boolean canUseSkill() {
+		if(cur_pp>0) return true;
+		else {
 			new Textdialog("该技能PP值不足，无法释放");
 			return false;
 		}
 	}
 	
-	private void skillFunction(Player self) {};
+	
+	public abstract void skillFunction(Player self, ArrayList<Monster> monsters);
 
-	private void skillFunction(Player self, ArrayList<Monster> monsters) {};
-
-	public void skillFunction(Player self,ArrayList<Monster> monsters,int i ) {};
 	
 	public String getName() {
 		return name;
@@ -50,8 +66,8 @@ public abstract class Skill {
 		return description;
 	}
 
-	public Type getType() {
-		return type;
+	public boolean is_OnTheOffensive() {
+		return on_the_offensive;
 	}
 
 	public int getMax_pp() {
