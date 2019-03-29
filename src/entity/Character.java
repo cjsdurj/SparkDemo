@@ -77,6 +77,7 @@ public abstract class Character implements Comparable {
 		cur_attack = attack;
 		cur_defence = defence;
 		
+		
 	}
 
 	public boolean is_alive() {

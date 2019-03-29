@@ -45,12 +45,23 @@ public abstract class Skill {
 	public boolean canUseSkill() {
 		if(cur_pp>0) return true;
 		else {
+			if(this.name.equals("空技能"))  return false;
 			new Textdialog("该技能PP值不足，无法释放");
 			return false;
 		}
 	}
 	
 	
+	
+	
+	
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		Skill other = (Skill) obj;
+		return  this.name.equals(other.getName());
+	}
+
 	public abstract void skillFunction(Player self, ArrayList<Monster> monsters);
 
 	

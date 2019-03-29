@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+
 import javax.swing.AbstractListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -125,7 +127,7 @@ public class MenuDialog extends javax.swing.JDialog {
 			}
 		});
 
-		jButton3.setText("使用技能");
+		jButton3.setText("学习技能");
 		jButton3.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jButton3ActionPerformed(evt);
@@ -228,7 +230,7 @@ public class MenuDialog extends javax.swing.JDialog {
 	}
 
 	private void jList3ValueChanged(ListSelectionEvent evt) {
-		jTextArea1.setText(player.getSkills()[jList3.getSelectedIndex()].getDescription());
+		jTextArea1.setText(player.getAll_skills().get(jList3.getSelectedIndex()).getDescription());
 	}
 
 	private void jButton1ActionPerformed(ActionEvent evt) {
@@ -243,9 +245,29 @@ public class MenuDialog extends javax.swing.JDialog {
 	}
 
 	private void jButton2ActionPerformed(ActionEvent evt) {
+		if (jList2.getSelectedIndex() == -1)
+			return;
+		Weapon w =player.getWeapons()[jList2.getSelectedIndex()];
+		player.useWeapon(w);
+		statepanel.repaint();
+	
 	}
 
 	private void jButton3ActionPerformed(ActionEvent evt) {
+		if (jList3.getSelectedIndex() == -1)
+			return;
+		Skill target = player.getAll_skills().get(jList3.getSelectedIndex());
+		
+		int skill_choice = new Choosedialog(player.getSkills()).getChoice();
+		   if(skill_choice ==-1) return;
+		Skill skill = player.getSkills()[skill_choice];
+		new Textdialog(player.getName()+"忘记了"+skill.getName()+"，"+"学会了"+target.getName());
+		player.SwapSkill(skill, target);
+		
+		statepanel.repaint();
+		// 道具面板重画
+		jList3.setModel(new ListModel("技能"));
+		jList3.repaint();
 	}
 
 	class ListModel extends AbstractListModel {
@@ -267,11 +289,11 @@ public class MenuDialog extends javax.swing.JDialog {
 					strings[i] = potions[i].getName();
 				}
 			} else if (str.equals("技能")) {
-				Skill[] skills = Player.getInstance().getSkills();
-				int length = skills.length;
+				ArrayList<Skill> skills = Player.getInstance().getAll_skills();
+				int length = skills.size();
 				strings = new String[length];
 				for (int i = 0; i < length; i++) {
-					strings[i] = skills[i].getName();
+					strings[i] = skills.get(i).getName();
 				}
 			}
 		}

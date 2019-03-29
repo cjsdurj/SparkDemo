@@ -50,7 +50,7 @@ class Fightdialog extends JDialog implements ActionListener {
 		MonsterFactory hardFactory = new HardMonsterFactory();
 
 		monsters = new ArrayList<Monster>();
-		// 10%概率产生简单怪物，40%概率产生中等难度怪物，50%概率产生困难难度怪物
+		// 50%概率产生简单怪物，40%概率产生中等难度怪物，10%概率产生困难难度怪物
 		for (int j = 0; j < size; j++) {
 			double x = Math.random();
 			Monster monster = null;

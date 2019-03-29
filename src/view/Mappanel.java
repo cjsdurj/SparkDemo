@@ -174,6 +174,7 @@ public class Mappanel extends JPanel implements KeyListener {
 
 	public void setEnter() {
 	     new MenuDialog();
+	     statepanel.repaint();
 	}
 
 	public void keyTyped(KeyEvent e) {

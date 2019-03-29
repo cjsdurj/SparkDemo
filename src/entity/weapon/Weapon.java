@@ -54,6 +54,12 @@ public abstract class Weapon {
 	public void setStrength(int strength) {
 		this.strength = strength;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		Weapon w = (Weapon)obj;
+		return this.getName().equals(w.getName());
+	}
 	
 	
 	
